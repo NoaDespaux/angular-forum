@@ -13,5 +13,6 @@ To start the front of the application, run:
 
 ```bash
 cd front-forum
+npm install
 ng serve
 ```
