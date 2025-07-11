@@ -19,5 +19,5 @@ ng serve
 
 ## Test
 To test the features with a user, you can authenticate as:
-email: test@test.com
-password: password
+- email: test@test.com
+- password: password
