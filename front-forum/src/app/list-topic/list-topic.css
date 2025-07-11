@@ -1,0 +1,256 @@
+.topic-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Section */
+.header-section {
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 20px;
+}
+
+.header-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+  margin-top: 0;
+}
+
+.actions-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #0056b3;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.welcome-text {
+  color: #28a745;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #c82333;
+}
+
+.create-topic-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-topic-btn:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.create-topic-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Existing styles for topic list */
+.topic-list-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.loading {
+  color: #666;
+  font-style: italic;
+}
+
+.error {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 4px;
+  color: #c00;
+}
+
+.retry-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background-color: #0056b3;
+}
+
+.no-topics {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 40px;
+}
+
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.topic-card {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.topic-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: #ffffff;
+}
+
+.topic-title {
+  margin: 0 0 10px 0;
+  color: #007bff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.topic-description {
+  margin: 0 0 15px 0;
+  color: #666;
+  line-height: 1.5;
+}
+
+.topic-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #888;
+}
+
+.topic-date {
+  font-style: italic;
+}
+
+.click-hint {
+  color: #007bff;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.topic-author {
+  color: #007bff;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 24px 0 0 0;
+}
+
+.pagination button {
+  background: #f8f9fa;
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pagination button.active,
+.pagination button:hover:not(:disabled) {
+  background: #1976d2;
+  color: #fff;
+}
+
+.pagination button:disabled {
+  background: #e0e0e0;
+  color: #888;
+  border-color: #bdbdbd;
+  cursor: not-allowed;
+}
+
+/* Responsive adjustments for header */
+@media (max-width: 600px) {
+  .actions-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auth-section {
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .create-topic-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

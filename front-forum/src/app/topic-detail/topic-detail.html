@@ -1,0 +1,146 @@
+<div class="topic-detail-container">
+  <div class="header">
+    <button (click)="goBack()" class="back-btn">← Back to Topics</button>
+  </div>
+
+  @if (loading) {
+    <div class="loading">
+      Loading topic details...
+    </div>
+  }
+
+  @if (error) {
+    <div class="error">
+      {{ error }}
+      <button (click)="loadTopicAndPosts()" class="retry-btn">Retry</button>
+    </div>
+  }
+
+  @if (!loading && !error && topic) {
+    <div class="topic-content">
+      <div class="topic-header">
+        @if (isEditingTopic) {
+          <form (ngSubmit)="onSaveEditTopic()" class="edit-topic-form">
+            <div class="form-group">
+              <label for="editTitle">Title *</label>
+              <input id="editTitle" [(ngModel)]="editTopicTitle" name="editTopicTitle" required />
+            </div>
+            <div class="form-group">
+              <label for="editContent">Content *</label>
+              <textarea id="editContent" [(ngModel)]="editTopicContent" name="editTopicContent" required rows="6"></textarea>
+            </div>
+            @if (editTopicError) {
+              <div class="error">{{ editTopicError }}</div>
+            }
+            <div class="form-actions">
+              <button type="button" (click)="onCancelEditTopic()">Cancel</button>
+              <button type="submit">Save</button>
+            </div>
+          </form>
+        } @else {
+          <h1 class="topic-title">{{ topic.title }}</h1>
+          <div class="topic-meta">
+            <span class="topic-author">{{ topic.userName }}</span>
+            <span class="topic-date">{{ topic.created | date:'short' }}</span>
+            @if (isAuthenticated && currentUserId === topic.createdBy) {
+              <button (click)="onEditTopic()" class="edit-btn">Edit</button>
+              <button (click)="onDeleteTopic()" class="delete-btn">Delete</button>
+            }
+          </div>
+        }
+
+        <div class="topic-main-content">
+          @if (topic.content) {
+            <div class="topic-content-section">
+              <h3 class="content-label">{{ topic.content }}</h3>
+            </div>
+          }
+
+          @if (topic.description && topic.description !== topic.content) {
+            <div class="topic-description-section">
+              <h3 class="content-label">Description:</h3>
+              <div class="topic-text">{{ topic.description }}</div>
+            </div>
+          }
+
+          @if (!topic.content && !topic.description) {
+            <div class="no-content">
+              <em>No additional content provided for this topic.</em>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="posts-section">
+        <h2 class="posts-title">Posts ({{ posts.length }})</h2>
+
+        <div class="create-post-section">
+          @if (!isAuthenticated) {
+            <div class="auth-prompt">
+              <p>Please <a href="/auth">login</a> to create a post.</p>
+            </div>
+          }
+
+          @if (isAuthenticated) {
+            <form (ngSubmit)="onCreatePost()" class="create-post-form">
+              <div class="form-group">
+                <label for="newPost">Add a new post:</label>
+                <textarea
+                  id="newPost"
+                  [(ngModel)]="newPostContent"
+                  name="newPostContent"
+                  placeholder="Write your post here..."
+                  [disabled]="isCreatingPost"
+                  rows="4"></textarea>
+              </div>
+
+              @if (postError) {
+                <div class="error">{{ postError }}</div>
+              }
+
+              <button type="submit" [disabled]="isCreatingPost || !newPostContent.trim()">
+                {{ isCreatingPost ? 'Creating...' : 'Create Post' }}
+              </button>
+            </form>
+          }
+        </div>
+
+        @if (posts.length === 0) {
+          <div class="no-posts">
+            No posts yet. Be the first to post!
+          </div>
+        }
+
+        @for (post of posts; track post.id) {
+          <div class="post-card">
+            @if (editingPostId === post.id) {
+              <form (ngSubmit)="onSaveEditPost(post)" class="edit-post-form">
+                <div class="form-group">
+                  <label for="editPostContent">Content *</label>
+                  <textarea id="editPostContent" [(ngModel)]="editPostContent" name="editPostContent" required rows="3"></textarea>
+                </div>
+                @if (editPostError) {
+                  <div class="error">{{ editPostError }}</div>
+                }
+                <div class="form-actions">
+                  <button type="button" (click)="onCancelEditPost()">Cancel</button>
+                  <button type="submit">Save</button>
+                </div>
+              </form>
+            } @else {
+              <div class="post-content">{{ post.content }}</div>
+              <div class="post-meta">
+                <span class="post-author">{{ post.userName }}</span>
+                <span class="post-date">{{ post.created | date:'short' }}</span>
+                @if (isAuthenticated && currentUserId === post.postedBy) {
+                  <button (click)="onEditPost(post)" class="edit-btn">Edit</button>
+                  <button (click)="onDeletePost(post)" class="delete-btn">Delete</button>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

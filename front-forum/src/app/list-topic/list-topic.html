@@ -1,0 +1,74 @@
+<div class="topic-list-container">
+  <div class="header-section">
+
+    <div class="actions-section">
+      <div class="auth-section">
+        @if (!isAuthenticated) {
+          <div class="auth-buttons">
+            <button (click)="goToAuth()" class="login-btn">Login</button>
+          </div>
+        }
+
+        @if (isAuthenticated && currentUser) {
+          <div class="user-info">
+            <span class="welcome-text">Welcome, {{ currentUser.name }}!</span>
+            <button (click)="logout()" class="logout-btn">Logout</button>
+          </div>
+        }
+      </div>
+
+      <button
+        (click)="goToCreateTopic()"
+        class="create-topic-btn"
+        [disabled]="!isAuthenticated">
+        {{ isAuthenticated ? 'Create Topic' : 'Login to Create Topic' }}
+      </button>
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading">
+      Loading topics...
+    </div>
+  }
+
+  @if (error) {
+    <div class="error">
+      {{ error }}
+      <button (click)="loadTopics()" class="retry-btn">Retry</button>
+    </div>
+  }
+
+  @if (!loading && !error) {
+    <div class="topics">
+      @if (topics.length === 0) {
+        <div class="no-topics">
+          No topics found. Be the first to create one!
+        </div>
+      }
+
+      @for (topic of paginatedTopics; track topic.id) {
+        <div class="topic-card" (click)="viewTopic(topic.id)">
+          <h3 class="topic-title">{{ topic.title }}</h3>
+          @if (topic.description) {
+            <p class="topic-description">{{ topic.description }}</p>
+          }
+          <div class="topic-meta">
+            <span class="topic-author">By: {{ topic.userName }}</span>
+            <span class="topic-date">{{ topic.created | date:'medium' }}</span>
+            <span class="click-hint">Click to view posts →</span>
+          </div>
+        </div>
+      }
+      @if (totalPages > 1) {
+        <div class="pagination">
+          <button (click)="setPage(page - 1)" [disabled]="page === 1">Previous</button>
+          @for (num of pageNumbers; track num) {
+            <button (click)="setPage(num)" [class.active]="page === num">{{ num }}</button>
+          }
+          <button (click)="setPage(page + 1)" [disabled]="page === totalPages">Next</button>
+        </div>
+      }
+    </div>
+  }
+</div>
