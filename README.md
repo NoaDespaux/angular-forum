@@ -16,3 +16,8 @@ cd front-forum
 npm install
 ng serve
 ```
+
+## Test
+To test the features with a user, you can authenticate as:
+email: test@test.com
+password: password
